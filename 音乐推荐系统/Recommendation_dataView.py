@@ -43,13 +43,13 @@ def song_playcount_distribution(df, limit_num):
 
 
 def most_popular_songs(df):
-    popular_songs = df[['title', 'listen_count']].groupby('title').sum().reset_index()
-    popular_songs_top_20 = popular_songs.sort_values('listen_count', ascending=False).head(n=20)
+    popular_songs = df[['title', 'play_count']].groupby('title').sum().reset_index()
+    popular_songs_top_20 = popular_songs.sort_values('play_count', ascending=False).head(n=20)
     print("The most 20 popular songs is:")
     print(popular_songs_top_20)
 
     song_playcounts = {}
-    for song, counts in zip(popular_songs_top_20['title'], popular_songs_top_20['listen_count']):
+    for song, counts in zip(popular_songs_top_20['title'], popular_songs_top_20['play_count']):
         song_playcounts[song] = counts
 
     plt.figure(figsize=(12, 8))
@@ -61,13 +61,13 @@ def most_popular_songs(df):
 
 
 def most_popular_release(df):
-    popular_release = df[['release', 'listen_count']].groupby('release').sum().reset_index()
-    popular_release_top_20 = popular_release.sort_values('listen_count', ascending=False).head(n=20)
+    popular_release = df[['release', 'play_count']].groupby('release').sum().reset_index()
+    popular_release_top_20 = popular_release.sort_values('play_count', ascending=False).head(n=20)
     print("The most 20 popular release is:")
     print(popular_release_top_20)
 
     release_playcounts = {}
-    for release, counts in zip(popular_release_top_20['release'], popular_release_top_20['listen_count']):
+    for release, counts in zip(popular_release_top_20['release'], popular_release_top_20['play_count']):
         release_playcounts[release] = counts
 
     plt.figure(figsize=(12, 8))
@@ -79,13 +79,13 @@ def most_popular_release(df):
 
 
 def most_popular_artist(df):
-    popular_artist = df[['artist_name', 'listen_count']].groupby('artist_name').sum().reset_index()
-    popular_artist_top_20 = popular_artist.sort_values('listen_count', ascending=False).head(n=20)
+    popular_artist = df[['artist_name', 'play_count']].groupby('artist_name').sum().reset_index()
+    popular_artist_top_20 = popular_artist.sort_values('play_count', ascending=False).head(n=20)
     print("The most 20 popular artists is:")
     print(popular_artist_top_20)
 
     artist_playcounts = {}
-    for artist, counts in zip(popular_artist_top_20['artist_name'], popular_artist_top_20['listen_count']):
+    for artist, counts in zip(popular_artist_top_20['artist_name'], popular_artist_top_20['play_count']):
         artist_playcounts[artist] = counts
 
     plt.figure(figsize=(12, 8))
@@ -101,15 +101,12 @@ if __name__ == '__main__':
     song_play_count = pd.read_csv('song_df.csv')
     train_df = pd.read_csv('train_dataset.csv')
 
-    ##############################################################
-    # 分别查看用户听歌数目分布、歌曲被播放的分布
-    ##############################################################
+    # 1. 分别查看用户听歌数目分布、歌曲被播放的分布
     user_playcount_distribution(user_play_count, limit_num=100)
     song_playcount_distribution(song_play_count, limit_num=100)
 
-    ##############################################################
-    # 分别查看最受欢迎的歌手、最受欢迎的的专辑、最受欢迎的歌手
-    ##############################################################
+
+    # 2. 分别查看最受欢迎的歌手、最受欢迎的的专辑、最受欢迎的歌手
     most_popular_songs(train_df)
     most_popular_release(train_df)
     most_popular_artist(train_df)
